@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "corvus:blocks/frankincense_log",
+    "rings": "corvus:blocks/frankincense_log_top"
+  }
+}
