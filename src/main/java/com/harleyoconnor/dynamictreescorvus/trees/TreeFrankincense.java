@@ -72,12 +72,30 @@ public class TreeFrankincense extends TreeFamily {
 
         @Override
         protected int[] customDirectionManipulation(World world, BlockPos pos, int radius, GrowSignal signal, int[] probMap) {
+            // Ensure all values are initially equal.
+            for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
+
             // Disallow growing downwards.
             probMap[EnumFacing.DOWN.getIndex()] = 0;
 
+            // Allow growing upwards in the trunk only.
             probMap[EnumFacing.UP.getIndex()] = signal.isInTrunk() ? this.upProbability : 0;
 
-            // Custom direction manipulation coming soon.
+            if (signal.isInTrunk()) {
+                // If height of tree is certain, random numbers, set horizontals to double the energy.
+                if ((signal.delta.getY() == getRandomNumber(1, 2) || signal.delta.getY() == getRandomNumber(4, 5)))
+                    for (EnumFacing direction : EnumFacing.HORIZONTALS)
+                        probMap[direction.getIndex()] = (int) signal.energy * 2;
+                else if (signal.delta.getY() >= 11) {
+                    for (EnumFacing direction : EnumFacing.HORIZONTALS)
+                        probMap[direction.getIndex()] = (int) signal.energy * 2;
+                    // Allow other branches to grow up outside of trunk if direction is more than or equal to twelve.
+                    probMap[EnumFacing.UP.getIndex()] = getRandomNumber(4, 10);
+                } else if (signal.delta.getY() >= 16) {
+                    // Set all values to zero if tree is 16 high or greater.
+                    for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
+                }
+            }
 
             return probMap;
         }

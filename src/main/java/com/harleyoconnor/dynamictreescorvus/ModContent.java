@@ -51,7 +51,7 @@ public class ModContent {
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
 
-		frankincenseLeavesProperties = setUpLeaves(TreeFrankincense.leavesBlock, "acacia");
+		frankincenseLeavesProperties = setUpLeaves(TreeFrankincense.leavesBlock, "frankincense");
 
 		LeavesPaging.getLeavesBlockForSequence(DynamicTreesCorvus.MODID, 0, frankincenseLeavesProperties);
 
