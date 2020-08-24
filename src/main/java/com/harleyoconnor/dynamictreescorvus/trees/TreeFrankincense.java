@@ -27,13 +27,11 @@ public class TreeFrankincense extends TreeFamily {
 
     public class SpeciesFrankincense extends Species {
 
-        private boolean growCandleSignal = false;
-
         public SpeciesFrankincense(TreeFamily treeFamily) {
             super(treeFamily.getName(), treeFamily, ModContent.frankincenseLeavesProperties);
 
             // Set growing parameters.
-            this.setBasicGrowingParameters(0.15f, 10.0f, 10, 1, 0.7f);
+            this.setBasicGrowingParameters(0.15f, 20.0f, 10, 1, 0.7f);
 
             // Setup seed.
             this.setupStandardSeedDropping();
@@ -72,74 +70,20 @@ public class TreeFrankincense extends TreeFamily {
             return true;
         }
 
-        /** Define custom growth logic for Frankincense tree.
-         * @param probMap - Defines probabilities for the signal for each face of the block called upon.
-         * **/
         @Override
         protected int[] customDirectionManipulation(World world, BlockPos pos, int radius, GrowSignal signal, int[] probMap) {
-            for (EnumFacing dir : EnumFacing.VALUES) probMap[dir.getIndex()] = 2;
-
-            // Generate first, second, and third branch heights.
-            final double firstBranchHeight = (Math.random() * (3 - 1 + 1) + 1);
-            final double secondBranchHeight = (Math.random() * (5 - 3 + 1) + 3);
-            final double thirdBranchHeight = (Math.random() * (13 - 9 + 1) + 9);
-
-            // Disallow branches growing downwards.
+            // Disallow growing downwards.
             probMap[EnumFacing.DOWN.getIndex()] = 0;
 
-            // TODO: Remake logic.
+            probMap[EnumFacing.UP.getIndex()] = signal.isInTrunk() ? this.upProbability : 0;
 
-            // Disallow branches growing upwards after having turned out of the trunk.
-            if (!signal.isInTrunk()) probMap[EnumFacing.UP.getIndex()] = 0;
-
-            float energyRatio = signal.delta.getY() / this.getEnergy(world, pos);
-            float spreadPush = energyRatio * 2;
-            spreadPush = spreadPush < 1.0f ? 1.0f : spreadPush;
-
-            for (EnumFacing dir: EnumFacing.HORIZONTALS) probMap[dir.ordinal()] *= spreadPush;
-
-            // Generate new branch off trunk if the number of steps is first branch height, second branch height, or third branch height.
-            if (signal.delta.getY() != firstBranchHeight && signal.delta.getY() != secondBranchHeight && signal.delta.getY() != thirdBranchHeight && signal.isInTrunk()) {
-                for (EnumFacing dir : EnumFacing.HORIZONTALS) probMap[dir.getIndex()] = 0;
-                probMap[EnumFacing.UP.getIndex()] = 1;
-            }
-
-            // Stop branches growing more than one block away from branch.
-            if (signal.numTurns == 1 && signal.delta.distanceSq(0, signal.delta.getY(), 0) == 1.0) for (EnumFacing dir : EnumFacing.HORIZONTALS) if (signal.dir != dir) probMap[dir.getIndex()] = 0;
-
-            System.out.println("Turns: " + signal.numTurns + " Steps: " + signal.numSteps + " Delta Y: " + signal.delta.getY() + " Down: " + probMap[EnumFacing.DOWN.getIndex()] + " Up: " + probMap[EnumFacing.DOWN.getIndex()] + " North: " + probMap[EnumFacing.NORTH.getIndex()] + " South: " + probMap[EnumFacing.SOUTH.getIndex()] + " West: " + probMap[EnumFacing.WEST.getIndex()] + " East: " + probMap[EnumFacing.EAST.getIndex()]);
-
-            /*
-            //Amplify cardinal directions to encourage spread the higher we get
-            float energyRatio = signal.delta.getY() / this.getEnergy(world, pos);
-            float spreadPush = energyRatio * 2;
-            spreadPush = spreadPush < 1.0f ? 1.0f : spreadPush;
-
-            for (EnumFacing dir: EnumFacing.HORIZONTALS) probMap[dir.ordinal()] *= spreadPush;
-
-            // Ensure that the branch gets out of the trunk at least two blocks so it won't interfere with new side branches at the same level
-            if (signal.numTurns == 1 && signal.delta.distanceSq(0, signal.delta.getY(), 0) == 1.0 ) for (EnumFacing dir: EnumFacing.HORIZONTALS) if (signal.dir != dir) probMap[dir.ordinal()] = 0;
-
-            // Disallow too much turning on branches not on trunk.
-            if (signal.numSteps > 2 && !signal.isInTrunk()) for (EnumFacing dir : EnumFacing.HORIZONTALS) probMap[dir.getIndex()] = 0;
-
-            // Disallow creation of new branches if steps is more than 3 and less than 9.
-            if (((signal.numSteps == (Math.random() * (3 - 1 + 1) + 1) || signal.numSteps == (Math.random() * (5 - 3 + 1) + 3)) || (signal.numSteps > 5 && signal.numSteps < this.maxBranchHeight)) && signal.isInTrunk()) {
-                probMap[EnumFacing.UP.getIndex()] = 1;
-                for (EnumFacing dir : EnumFacing.VALUES) probMap[dir.getIndex()] = 0;
-            }
-
-            // Disallow branches growing upwards after having turned out of the trunk.
-            if (!signal.isInTrunk()) {
-                if (signal.numSteps < this.maxBranchHeight - 2) {
-                    probMap[EnumFacing.UP.getIndex()] = 0;
-                }
-                probMap[signal.dir.ordinal()] *= 0.35; // Help create "zags" in horizontal branches.
-            }
-
-            if (signal.isInTrunk()) probMap[EnumFacing.UP.getIndex()] = 1;*/
+            // Custom direction manipulation coming soon.
 
             return probMap;
+        }
+
+        private int getRandomNumber (int min, int max) {
+            return new Random().nextInt((max + 1) - min) + min;
         }
 
     }

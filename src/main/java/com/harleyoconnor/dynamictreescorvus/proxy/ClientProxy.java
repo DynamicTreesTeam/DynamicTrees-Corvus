@@ -41,9 +41,8 @@ public class ClientProxy extends CommonProxy {
 					
 					Block block = state.getBlock();
 					
-					if (TreeHelper.isLeaves(block)) {
-						return ((BlockDynamicLeaves) block).getProperties(state).foliageColorMultiplier(state, worldIn, pos);
-					}
+					if (TreeHelper.isLeaves(block)) return ((BlockDynamicLeaves) block).getProperties(state).foliageColorMultiplier(state, worldIn, pos);
+
 					return 0x00FF00FF; //Magenta
 				}
 			});
