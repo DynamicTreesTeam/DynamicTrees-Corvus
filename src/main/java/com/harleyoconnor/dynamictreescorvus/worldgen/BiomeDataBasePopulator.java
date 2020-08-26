@@ -24,5 +24,6 @@ public class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
             DynamicTreesCorvus.logger.info("Added Frankincense species to biome database for Savannah.");
         });
     }
+    
 }
 

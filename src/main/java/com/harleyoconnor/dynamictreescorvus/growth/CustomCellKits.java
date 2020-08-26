@@ -25,10 +25,10 @@ public class CustomCellKits {
         private final ICell frankincenseBranch = new ICell() {
             @Override
             public int getValue() {
-                return 5;
+                return 3;
             }
 
-            final int map[] = {2, 3, 3, 3, 3, 3};
+            final int map[] = {0, 2, 3, 3, 3, 3};
 
             @Override
             public int getValueFromSide(EnumFacing side) {
@@ -53,12 +53,12 @@ public class CustomCellKits {
 
         @Override
         public ICell getCellForBranch(int i, int i1) {
-            return i == 1 ? frankincenseBranch : CellNull.NULLCELL;
+            return i == 1 ? this.frankincenseBranch : CellNull.NULLCELL;
         }
 
         @Override
         public ICellSolver getCellSolver() {
-            return frankincenseSolver;
+            return this.frankincenseSolver;
         }
 
         @Override

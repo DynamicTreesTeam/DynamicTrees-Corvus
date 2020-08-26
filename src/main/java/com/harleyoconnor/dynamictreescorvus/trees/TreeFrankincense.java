@@ -58,11 +58,9 @@ public class TreeFrankincense extends TreeFamily {
                     for (int z = rootPos.getZ() - range; z < rootPos.getZ() + range; z++) {
                         Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
-                        if (block instanceof BlockEffectCandle) {
-                            if (((BlockEffectCandle) block).getEffect() instanceof CandleEffect.EffectGrowth) {
+                        if (block instanceof BlockEffectCandle)
+                            if (((BlockEffectCandle) block).getEffect() instanceof CandleEffect.EffectGrowth)
                                 return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
-                            }
-                        }
                     }
                 }
             }
@@ -88,8 +86,8 @@ public class TreeFrankincense extends TreeFamily {
                         probMap[direction.getIndex()] = (int) signal.energy * 2;
                 else if (signal.delta.getY() >= 11) {
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 2;
-                    // Allow other branches to grow up outside of trunk if direction is more than or equal to twelve.
+                        probMap[direction.getIndex()] = (int) signal.energy * 3;
+                    // Allow other branches to grow up outside of trunk if direction is more than or equal to eleven.
                     probMap[EnumFacing.UP.getIndex()] = getRandomNumber(4, 10);
                 } else if (signal.delta.getY() >= 16) {
                     // Set all values to zero if tree is 16 high or greater.
