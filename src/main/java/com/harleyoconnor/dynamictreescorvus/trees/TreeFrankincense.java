@@ -40,7 +40,7 @@ public class TreeFrankincense extends TreeFamily {
 
         @Override
         public int maxBranchRadius() {
-            return 7;
+            return 4;
         }
 
         @Override
@@ -83,16 +83,23 @@ public class TreeFrankincense extends TreeFamily {
                 // If height of tree is certain, random numbers, set horizontals to double the energy.
                 if ((signal.delta.getY() == getRandomNumber(1, 2) || signal.delta.getY() == getRandomNumber(4, 5)))
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 2;
-                else if (signal.delta.getY() >= 11) {
+                        probMap[direction.getIndex()] = getRandomNumber(1, 50) == 1 ? (int) signal.energy * 2 : 0;
+                else if (signal.delta.getY() >= 11 && signal.delta.getY() < 16) {
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 3;
-                    // Allow other branches to grow up outside of trunk if direction is more than or equal to eleven.
-                    probMap[EnumFacing.UP.getIndex()] = getRandomNumber(4, 10);
-                } else if (signal.delta.getY() >= 16) {
-                    // Set all values to zero if tree is 16 high or greater.
-                    for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
+                        probMap[direction.getIndex()] = (int) signal.energy * 2 * signal.delta.getY();
                 }
+            }
+
+            if (signal.delta.getY() >= 11 && signal.delta.getY() < 16) {
+                // Allow branches to grow outwards more near top to spread leaves.
+                for (EnumFacing direction : EnumFacing.HORIZONTALS)
+                    probMap[direction.getIndex()] = signal.delta.getX() < 2 && signal.delta.getZ() < 2 ? (int) signal.energy * 3 : 0;
+
+                // Allow other branches to grow up outside of trunk.
+                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(2, 4);
+            } else if (signal.delta.getY() >= 16) {
+                // Set all values to zero if tree is 16 high or greater.
+                for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
             }
 
             return probMap;

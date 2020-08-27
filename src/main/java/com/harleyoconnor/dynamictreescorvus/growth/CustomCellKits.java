@@ -28,7 +28,7 @@ public class CustomCellKits {
                 return 3;
             }
 
-            final int map[] = {0, 2, 3, 3, 3, 3};
+            final int map[] = {0, 3, 3, 3, 3, 3};
 
             @Override
             public int getValueFromSide(EnumFacing side) {
