@@ -61,7 +61,10 @@ public class TreeFrankincense extends TreeFamily {
             // Only grow tree if there is a growth candle in range.
             final int range = 6 + 1;
 
-            if (this.cachedCandlePositions.containsKey(rootPos)) if (isGrowthCandle(world.getBlockState(this.cachedCandlePositions.get(rootPos)).getBlock())) return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+            if (this.cachedCandlePositions.containsKey(rootPos))
+                if (isGrowthCandle(world.getBlockState(this.cachedCandlePositions.get(rootPos)).getBlock()))
+                    return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+                else this.cachedCandlePositions.remove(rootPos);
 
             for (int x = rootPos.getX() - range; x < rootPos.getX() + range; x++) {
                 for (int y = rootPos.getY() - range; y < rootPos.getY() + range; y++) {
