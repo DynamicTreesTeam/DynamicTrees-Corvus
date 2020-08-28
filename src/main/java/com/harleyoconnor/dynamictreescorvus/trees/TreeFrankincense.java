@@ -7,7 +7,9 @@ import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import com.harleyoconnor.dynamictreescorvus.ModContent;
+import com.harleyoconnor.dynamictreescorvus.dropcreators.DropCreatorFrankincense;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -33,9 +35,12 @@ public class TreeFrankincense extends TreeFamily {
             // Set growing parameters.
             this.setBasicGrowingParameters(0.15f, 20.0f, 10, 1, 0.7f);
 
+            // Setup drop creator for frankincense tears.
+            this.addDropCreator(new DropCreatorFrankincense());
+
             // Setup seed.
-            this.setupStandardSeedDropping();
             this.generateSeed();
+            this.setupStandardSeedDropping();
         }
 
         @Override
@@ -58,14 +63,18 @@ public class TreeFrankincense extends TreeFamily {
                     for (int z = rootPos.getZ() - range; z < rootPos.getZ() + range; z++) {
                         Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
-                        if (block instanceof BlockEffectCandle)
-                            if (((BlockEffectCandle) block).getEffect() instanceof CandleEffect.EffectGrowth)
-                                return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+                        // TODO: Cache growth candles using class map to (slightly) reduce lag.
+                        if (isGrowthCandle(block)) return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
                     }
                 }
             }
 
             return true;
+        }
+
+        private boolean isGrowthCandle (Block block) {
+            if (block instanceof BlockEffectCandle) return ((BlockEffectCandle) block).getEffect() instanceof CandleEffect.EffectGrowth;
+            return false;
         }
 
         @Override
@@ -95,8 +104,8 @@ public class TreeFrankincense extends TreeFamily {
                 for (EnumFacing direction : EnumFacing.HORIZONTALS)
                     probMap[direction.getIndex()] = signal.delta.getX() < 2 && signal.delta.getZ() < 2 ? (int) signal.energy * 3 : 0;
 
-                // Allow other branches to grow up outside of trunk.
-                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(2, 4);
+                // Allow small chance of branch growing up.
+                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(1, 150) == 1 ? 20 : 0;
             } else if (signal.delta.getY() >= 16) {
                 // Set all values to zero if tree is 16 high or greater.
                 for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
@@ -128,6 +137,16 @@ public class TreeFrankincense extends TreeFamily {
     @Override
     public boolean autoCreateBranch() {
         return true;
+    }
+
+    @Override
+    public ItemStack getPrimitiveLogItemStack(int qty) {
+        return new ItemStack(logBlock, qty, 0);
+    }
+
+    @Override
+    public ItemStack getStick(int qty) {
+        return new ItemStack(Items.STICK, qty, 0);
     }
 
 }
