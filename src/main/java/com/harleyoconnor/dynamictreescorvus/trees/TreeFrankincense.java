@@ -20,6 +20,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import party.lemons.corvus.block.effectcandle.BlockEffectCandle;
 import party.lemons.corvus.block.effectcandle.CandleEffect;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class TreeFrankincense extends TreeFamily {
@@ -28,6 +29,8 @@ public class TreeFrankincense extends TreeFamily {
     public static Block leavesBlock = Block.getBlockFromName("corvus:frankinsence_leaves");
 
     public class SpeciesFrankincense extends Species {
+
+        private final HashMap<BlockPos, BlockPos> cachedCandlePositions = new HashMap<>();
 
         public SpeciesFrankincense(TreeFamily treeFamily) {
             super(treeFamily.getName(), treeFamily, ModContent.frankincenseLeavesProperties);
@@ -58,13 +61,18 @@ public class TreeFrankincense extends TreeFamily {
             // Only grow tree if there is a growth candle in range.
             final int range = 6 + 1;
 
+            if (this.cachedCandlePositions.containsKey(rootPos)) if (isGrowthCandle(world.getBlockState(this.cachedCandlePositions.get(rootPos)).getBlock())) return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+
             for (int x = rootPos.getX() - range; x < rootPos.getX() + range; x++) {
                 for (int y = rootPos.getY() - range; y < rootPos.getY() + range; y++) {
                     for (int z = rootPos.getZ() - range; z < rootPos.getZ() + range; z++) {
-                        Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
+                        BlockPos blockPos = new BlockPos(x, y, z);
+                        Block block = world.getBlockState(blockPos).getBlock();
 
-                        // TODO: Cache growth candles using class map to (slightly) reduce lag.
-                        if (isGrowthCandle(block)) return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+                        if (isGrowthCandle(block)) {
+                            this.cachedCandlePositions.put(rootPos, blockPos);
+                            return super.grow(world, rootyDirt, rootPos, soilLife, treeBase, treePos, random, natural);
+                        }
                     }
                 }
             }
