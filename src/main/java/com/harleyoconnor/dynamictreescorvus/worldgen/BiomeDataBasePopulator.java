@@ -23,7 +23,7 @@ public class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
             BiomePropertySelectors.RandomSpeciesSelector selector = new BiomePropertySelectors.RandomSpeciesSelector().add(10).add(frankincense, 1);
             dbase.setSpeciesSelector(biome, selector, BiomeDataBase.Operation.SPLICE_BEFORE);
 
-            DynamicTreesCorvus.logger.info("Added Frankincense species to biome database for Savannah.");
+            DynamicTreesCorvus.logger.info("Added Frankincense species to biome database for " + biome.getBiomeName() + ".");
         });
     }
 

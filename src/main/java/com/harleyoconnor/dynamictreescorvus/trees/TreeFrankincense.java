@@ -7,7 +7,6 @@ import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import com.harleyoconnor.dynamictreescorvus.ModContent;
-import com.harleyoconnor.dynamictreescorvus.dropcreators.DropCreatorFrankincense;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -37,9 +36,6 @@ public class TreeFrankincense extends TreeFamily {
 
             // Set growing parameters.
             this.setBasicGrowingParameters(0.15f, 20.0f, 10, 1, 0.7f);
-
-            // Setup drop creator for frankincense tears.
-            this.addDropCreator(new DropCreatorFrankincense());
 
             // Setup seed.
             this.generateSeed();
@@ -101,26 +97,32 @@ public class TreeFrankincense extends TreeFamily {
 
             if (signal.isInTrunk()) {
                 // If height of tree is certain, random numbers, set horizontals to double the energy.
-                if ((signal.delta.getY() == getRandomNumber(1, 2) || signal.delta.getY() == getRandomNumber(4, 5)))
+                if ((signal.delta.getY() == getRandomNumber(1, 2) || signal.delta.getY() == getRandomNumber(4, 6)))
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = getRandomNumber(1, 50) == 1 ? (int) signal.energy * 2 : 0;
+                        probMap[direction.getIndex()] = getRandomNumber(1, 75) == 1 ? (int) signal.energy * 2 : 0;
                 else if (signal.delta.getY() >= 11 && signal.delta.getY() < 16) {
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 2 * signal.delta.getY();
+                        probMap[direction.getIndex()] = (int) signal.energy * 6;
                 }
             }
 
-            if (signal.delta.getY() >= 11 && signal.delta.getY() < 16) {
+            // System.out.println("X: " + signal.delta.getX() + " Y: " + signal.delta.getY() + " Z: " + signal.delta.getZ());
+
+            if (signal.delta.getY() >= 11 && signal.delta.getY() < 13) {
                 // Allow branches to grow outwards more near top to spread leaves.
-                for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                    probMap[direction.getIndex()] = signal.delta.getX() < 2 && signal.delta.getZ() < 2 ? (int) signal.energy * 3 : 0;
+                if ((signal.delta.getX() < 2 && signal.delta.getZ() > -2) && (signal.delta.getZ() < 2 && signal.delta.getZ() > -2))
+                    for (EnumFacing direction : EnumFacing.HORIZONTALS)
+                        probMap[direction.getIndex()] = (int) signal.energy * 2;
 
                 // Allow small chance of branch growing up.
-                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(1, 150) == 1 ? 20 : 0;
-            } else if (signal.delta.getY() >= 16) {
+                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(1, 5000000) == 1 ? 20 : 0;
+            } else if (signal.delta.getY() >= 13) {
                 // Set all values to zero if tree is 16 high or greater.
                 for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
             }
+
+            // Disable direction signal came from.
+            probMap[signal.dir.getOpposite().getIndex()] = 0;
 
             return probMap;
         }

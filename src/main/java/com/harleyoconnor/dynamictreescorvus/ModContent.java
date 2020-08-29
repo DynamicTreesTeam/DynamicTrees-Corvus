@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
+import party.lemons.corvus.init.CorvusBlocks;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +95,9 @@ public class ModContent {
 
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
-
+		setUpSeedRecipes("frankincense", new ItemStack(CorvusBlocks.FRANKINSENCE_SAPLING, 1, 0));
 	}
+
 	public static void setUpSeedRecipes (String name, ItemStack treeSapling){
 		Species treeSpecies = TreeRegistry.findSpecies(new ResourceLocation(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID, name));
 		ItemStack treeSeed = treeSpecies.getSeedStack(1);
