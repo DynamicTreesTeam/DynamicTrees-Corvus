@@ -3,23 +3,28 @@ package com.harleyoconnor.dynamictreescorvus.trees;
 import com.ferreusveritas.dynamictrees.api.treedata.ITreePart;
 import com.ferreusveritas.dynamictrees.blocks.BlockRooty;
 import com.ferreusveritas.dynamictrees.systems.GrowSignal;
+import com.ferreusveritas.dynamictrees.systems.dropcreators.DropCreator;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import com.harleyoconnor.dynamictreescorvus.ModContent;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import party.lemons.corvus.block.effectcandle.BlockEffectCandle;
 import party.lemons.corvus.block.effectcandle.CandleEffect;
+import party.lemons.corvus.init.CorvusItems;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class TreeFrankincense extends TreeFamily {
@@ -27,7 +32,7 @@ public class TreeFrankincense extends TreeFamily {
     public static Block logBlock = Block.getBlockFromName("corvus:frankinsence_log");
     public static Block leavesBlock = Block.getBlockFromName("corvus:frankinsence_leaves");
 
-    public class SpeciesFrankincense extends Species {
+    public static final class SpeciesFrankincense extends Species {
 
         private final HashMap<BlockPos, BlockPos> cachedCandlePositions = new HashMap<>();
 
@@ -36,6 +41,24 @@ public class TreeFrankincense extends TreeFamily {
 
             // Set growing parameters.
             this.setBasicGrowingParameters(0.15f, 20.0f, 10, 1, 0.7f);
+
+            this.addDropCreator(new DropCreator(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense_tears")) {
+                private final Item item = CorvusItems.FRANKINCENSE_TEARS;
+                private final float rarity = 1f;
+
+                @Override
+                public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+                    int chance = (int) (200 / this.rarity);
+                    if (fortune > 0) {
+                        chance -= 10 << fortune;
+                        if (chance < 40) chance = 40;
+                    }
+
+                    if (random.nextInt(chance) == 0) dropList.add(new ItemStack(this.item, 1, 0));
+
+                    return dropList;
+                }
+            });
 
             // Setup seed.
             this.generateSeed();

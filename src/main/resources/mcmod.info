@@ -2,13 +2,13 @@
 {
   "modid": "dynamictreescorvus",
   "name": "Dynamic Trees for Corvus",
-  "description": "Adds compatibilities between dynamic trees and Corvus",
+  "description": "Adds compatibility between Dynamic Trees and Corvus.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Max Hyper"],
-  "credits": "Ferreusveritas for Dynamic Trees",
+  "authorList": ["Harley O'Connor"],
+  "credits": "Ferreusveritas for Dynamic Trees, Lemonszz for Corvus",
   "logoFile": "cv-logo.png",
   "screenshots": [],
   "dependencies": []
