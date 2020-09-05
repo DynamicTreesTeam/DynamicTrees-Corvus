@@ -40,7 +40,7 @@ public class TreeFrankincense extends TreeFamily {
             super(treeFamily.getName(), treeFamily, ModContent.frankincenseLeavesProperties);
 
             // Set growing parameters.
-            this.setBasicGrowingParameters(0.15f, 20.0f, 10, 1, 0.7f);
+            this.setBasicGrowingParameters(0.15f, 16.0f, 10, 1, 0.7f);
 
             this.addDropCreator(new DropCreator(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense_tears")) {
                 private final Item item = CorvusItems.FRANKINCENSE_TEARS;
@@ -112,36 +112,26 @@ public class TreeFrankincense extends TreeFamily {
             // Ensure all values are initially equal.
             for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
 
-            // Disallow growing downwards.
-            probMap[EnumFacing.DOWN.getIndex()] = 0;
+            final int signalHeight = (pos.getY() - signal.rootPos.getY()); // Get height of signal.
 
             // Allow growing upwards in the trunk only.
-            probMap[EnumFacing.UP.getIndex()] = signal.isInTrunk() ? this.upProbability : 0;
+            probMap[EnumFacing.UP.getIndex()] = signal.isInTrunk() && signalHeight < 14 ? this.upProbability : 0;
 
             if (signal.isInTrunk()) {
                 // If height of tree is certain, random numbers, set horizontals to double the energy.
-                if ((signal.delta.getY() == getRandomNumber(1, 2) || signal.delta.getY() == getRandomNumber(4, 6)))
+                if ((signalHeight == getRandomNumber(1, 2) || signalHeight == getRandomNumber(4, 6)))
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = getRandomNumber(1, 75) == 1 ? (int) signal.energy * 2 : 0;
-                else if (signal.delta.getY() >= 11 && signal.delta.getY() < 16) {
-                    for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 6;
-                }
+                        probMap[direction.getIndex()] = getRandomNumber(1, 65) == 1 ? (int) signal.energy * 2 : 0;
             }
 
-            // System.out.println("X: " + signal.delta.getX() + " Y: " + signal.delta.getY() + " Z: " + signal.delta.getZ());
-
-            if (signal.delta.getY() >= 11 && signal.delta.getY() < 13) {
+            if (signalHeight >= 12 && signalHeight < 15) {
                 // Allow branches to grow outwards more near top to spread leaves.
-                if ((signal.delta.getX() < 2 && signal.delta.getZ() > -2) && (signal.delta.getZ() < 2 && signal.delta.getZ() > -2))
+                if (isInHorizontalRange(pos, signal.rootPos, 2))
                     for (EnumFacing direction : EnumFacing.HORIZONTALS)
-                        probMap[direction.getIndex()] = (int) signal.energy * 2;
+                        probMap[direction.getIndex()] = getRandomNumber(1, 4) == 1 ? 18 : 0;
 
                 // Allow small chance of branch growing up.
-                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(1, 5000000) == 1 ? 20 : 0;
-            } else if (signal.delta.getY() >= 13) {
-                // Set all values to zero if tree is 16 high or greater.
-                for (EnumFacing direction : EnumFacing.VALUES) probMap[direction.getIndex()] = 0;
+                probMap[EnumFacing.UP.getIndex()] = getRandomNumber(1, 100) == 1 ? 20 : 0;
             }
 
             // Disable direction signal came from.
@@ -152,6 +142,10 @@ public class TreeFrankincense extends TreeFamily {
 
         private int getRandomNumber (int min, int max) {
             return new Random().nextInt((max + 1) - min) + min;
+        }
+
+        private boolean isInHorizontalRange (final BlockPos firstPos, final BlockPos secondPos, final int range) {
+            return (firstPos.getX() - secondPos.getX() < range && firstPos.getX() - secondPos.getX() > -range) && (firstPos.getZ() - secondPos.getZ() < range && firstPos.getZ() - secondPos.getZ() > -range);
         }
 
     }
