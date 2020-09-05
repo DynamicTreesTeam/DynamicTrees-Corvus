@@ -15,8 +15,8 @@ public class DynamicTreesCorvus {
 	
 	public static final String MODID = "dynamictreescorvus";
 	public static final String NAME = "Dynamic Trees for Corvus";
-	public static final String DEPENDENCIES = "required-after:" + ModConstants.DYNAMICTREES_LATEST
-			+ ";required-after:corvus";
+	public static final String DEPENDENCIES = ModConstants.REQAFTER + ModConstants.DYNAMICTREES_LATEST
+			+ ModConstants.NEXT + ModConstants.REQAFTER + "corvus";
 	
 	@Mod.Instance
 	public static DynamicTreesCorvus instance;

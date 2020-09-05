@@ -18,9 +18,6 @@ public class CommonProxy {
 	}
 	
 	public void init() {
-		// Register frankincense tears drop creator.
-		// TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense")).addDropCreator(new DropCreatorFrankincense());
-
 		// Disable Corvus tree generation.
 		disableVanillaTreeGen();
 	}

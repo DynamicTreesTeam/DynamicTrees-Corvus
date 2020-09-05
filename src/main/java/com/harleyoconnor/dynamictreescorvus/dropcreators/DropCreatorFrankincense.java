@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import party.lemons.corvus.init.CorvusItems;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.Random;
 
 public class DropCreatorFrankincense extends DropCreator {
 
-    private final Item item = CorvusItems.FRANKINCENSE_TEARS;
     private final float rarity = 1f;
 
     public DropCreatorFrankincense() {
@@ -23,14 +23,23 @@ public class DropCreatorFrankincense extends DropCreator {
     }
 
     @Override
+    public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int soilLife, int fortune) {
+        return this.getDrops(world, species, leafPos, random, dropList, fortune);
+    }
+
+    @Override
     public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+        return this.getDrops(access, species, breakPos, random, dropList, fortune);
+    }
+
+    private List<ItemStack> getDrops (IBlockAccess access, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int fortune) {
         int chance = (int) (200 / this.rarity);
         if (fortune > 0) {
             chance -= 10 << fortune;
             if (chance < 40) chance = 40;
         }
 
-        if (random.nextInt(chance) == 0) dropList.add(new ItemStack(this.item, 1, 0));
+        if (random.nextInt(chance) == 0) dropList.add(new ItemStack(Item.getByNameOrId("corvus:frankincense_tears")));
 
         return dropList;
     }
