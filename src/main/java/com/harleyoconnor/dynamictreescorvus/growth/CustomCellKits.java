@@ -70,6 +70,7 @@ public class CustomCellKits {
         public int getDefaultHydration() {
             return 4;
         }
+
     };
 
 }
