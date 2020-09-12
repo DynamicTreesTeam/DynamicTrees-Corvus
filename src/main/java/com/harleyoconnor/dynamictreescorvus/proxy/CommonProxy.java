@@ -39,13 +39,17 @@ public class CommonProxy {
 
 	private static void disableVanillaTreeGen () {
 		try {
+			// Get field which stored tree generator for frankincense.
 			final Field field = CorvusTreeGen.class.getDeclaredField("FRANK_TREE_GEN");
 
+			// Allow access to 'final' field.
 			Field modifiersField = Field.class.getDeclaredField("modifiers");
 			modifiersField.setAccessible(true);
 			modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-			field.setAccessible(true);
+			field.setAccessible(true); // Allow access to private field.
+
+			// Set field as new generator that does nothing when called.
 			field.set(CorvusTreeGen.class, new WorldGenerator() {
 				@Override
 				public boolean generate(World worldIn, Random rand, BlockPos position) {
@@ -57,6 +61,8 @@ public class CommonProxy {
 				}
 			});
 		} catch (NoSuchFieldException | IllegalAccessException e) {
+			// Log error - just in case.
+			DynamicTreesCorvus.logger.error("An unexpected error occurred whilst trying to disable regular frankincense tree generation. Below is a detailed stacktrace, please report this on our issue tracker: https://github.com/Harleyoc1/DynamicTreesCorvus/issues.");
 			e.printStackTrace();
 		}
 	}

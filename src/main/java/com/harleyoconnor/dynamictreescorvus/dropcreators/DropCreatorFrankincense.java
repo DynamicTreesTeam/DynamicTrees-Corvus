@@ -12,11 +12,10 @@ import net.minecraft.world.World;
 import party.lemons.corvus.init.CorvusItems;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-public class DropCreatorFrankincense extends DropCreator {
-
-    private final float rarity = 1f;
+public final class DropCreatorFrankincense extends DropCreator {
 
     public DropCreatorFrankincense() {
         super(new ResourceLocation(DynamicTreesCorvus.MODID, CorvusItems.FRANKINCENSE_TEARS.getRegistryName().getResourceDomain()));
@@ -33,13 +32,15 @@ public class DropCreatorFrankincense extends DropCreator {
     }
 
     private List<ItemStack> getDrops (IBlockAccess access, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int fortune) {
-        int chance = (int) (200 / this.rarity);
+        final float rarity = 1f;
+
+        int chance = (int) (200 / rarity);
         if (fortune > 0) {
             chance -= 10 << fortune;
             if (chance < 40) chance = 40;
         }
 
-        if (random.nextInt(chance) == 0) dropList.add(new ItemStack(Item.getByNameOrId("corvus:frankincense_tears")));
+        if (random.nextInt(chance) == 0) dropList.add(new ItemStack(Objects.requireNonNull(Item.getByNameOrId("corvus:frankincense_tears"))));
 
         return dropList;
     }

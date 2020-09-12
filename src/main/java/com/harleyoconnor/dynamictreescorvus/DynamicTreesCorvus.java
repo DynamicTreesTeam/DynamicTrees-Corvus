@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid= DynamicTreesCorvus.MODID, name= DynamicTreesCorvus.NAME, dependencies = DynamicTreesCorvus.DEPENDENCIES)
-public class DynamicTreesCorvus {
+public final class DynamicTreesCorvus {
 	
 	public static final String MODID = "dynamictreescorvus";
 	public static final String NAME = "Dynamic Trees for Corvus";

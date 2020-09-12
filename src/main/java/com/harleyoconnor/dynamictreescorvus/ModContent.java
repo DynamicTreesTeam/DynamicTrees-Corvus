@@ -37,7 +37,7 @@ import java.util.Collections;
 
 @Mod.EventBusSubscriber(modid = com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID)
 @ObjectHolder(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID)
-public class ModContent {
+public final class ModContent {
 
 	public static ILeavesProperties frankincenseLeavesProperties;
 
@@ -67,8 +67,7 @@ public class ModContent {
 	}
 
 	public static ILeavesProperties setUpLeaves (Block primitiveLeavesBlock, String cellKit){
-		ILeavesProperties leavesProperties;
-		leavesProperties = new LeavesProperties(
+		return new LeavesProperties(
 				primitiveLeavesBlock.getDefaultState(),
 				new ItemStack(primitiveLeavesBlock, 1, 0),
 				TreeRegistry.findCellKit(cellKit))
@@ -82,10 +81,10 @@ public class ModContent {
 				return 1;
 			}
 		};
-		return leavesProperties;
 	}
 
-	@SubscribeEvent public static void registerItems(RegistryEvent.Register<Item> event) {
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 
 		ArrayList<Item> treeItems = new ArrayList<>();
@@ -99,7 +98,7 @@ public class ModContent {
 	}
 
 	public static void setUpSeedRecipes (String name, ItemStack treeSapling){
-		Species treeSpecies = TreeRegistry.findSpecies(new ResourceLocation(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID, name));
+		Species treeSpecies = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, name));
 		ItemStack treeSeed = treeSpecies.getSeedStack(1);
 		ItemStack treeTransformationPotion = ModItems.dendroPotion.setTargetTree(new ItemStack(ModItems.dendroPotion, 1, DendroPotionType.TRANSFORM.getIndex()), treeSpecies.getFamily());
 		BrewingRecipeRegistry.addRecipe(new ItemStack(ModItems.dendroPotion, 1, DendroPotionType.TRANSFORM.getIndex()), treeSeed, treeTransformationPotion);

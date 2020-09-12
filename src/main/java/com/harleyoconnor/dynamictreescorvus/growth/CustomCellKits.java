@@ -13,10 +13,9 @@ import com.ferreusveritas.dynamictrees.util.SimpleVoxmap;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public class CustomCellKits {
+public final class CustomCellKits {
 
     public CustomCellKits() {
-        super();
         TreeRegistry.registerCellKit(new ResourceLocation(ModConstants.MODID, "frankincense"), this.frankincenseCellKit);
     }
 
@@ -28,7 +27,7 @@ public class CustomCellKits {
                 return 3;
             }
 
-            final int map[] = {0, 3, 3, 3, 3, 3};
+            final int[] map = {0, 3, 3, 3, 3, 3};
 
             @Override
             public int getValueFromSide(EnumFacing side) {
@@ -36,7 +35,7 @@ public class CustomCellKits {
             }
         };
 
-        private final ICell acaciaLeafCells[] = {
+        private final ICell[] acaciaLeafCells = {
                 CellNull.NULLCELL,
                 new CellAcaciaLeaf(1),
                 new CellAcaciaLeaf(2),
@@ -61,6 +60,7 @@ public class CustomCellKits {
             return this.frankincenseSolver;
         }
 
+        // TODO: Create custom leaf cluster - this is the "stamp" that is making trees generate with too many leaves.
         @Override
         public SimpleVoxmap getLeafCluster() {
             return LeafClusters.acacia;

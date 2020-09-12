@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientProxy extends CommonProxy {
+public final class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void preInit() {
@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init() {
 		super.init();
-		registerColorHandlers();
+		this.registerColorHandlers();
 	}
 	
 	@Override public void postInit() {
@@ -38,4 +38,5 @@ public class ClientProxy extends CommonProxy {
 			});
 		}
 	}
+
 }

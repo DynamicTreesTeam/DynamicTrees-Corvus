@@ -23,7 +23,7 @@ import party.lemons.corvus.block.effectcandle.CandleEffect;
 import java.util.HashMap;
 import java.util.Random;
 
-public class TreeFrankincense extends TreeFamily {
+public final class TreeFrankincense extends TreeFamily {
 
     public static Block logBlock = Block.getBlockFromName("corvus:frankinsence_log");
     public static Block leavesBlock = Block.getBlockFromName("corvus:frankinsence_leaves");
@@ -43,6 +43,7 @@ public class TreeFrankincense extends TreeFamily {
             this.envFactor(BiomeDictionary.Type.NETHER, 0.75F);
             this.envFactor(BiomeDictionary.Type.WET, 0.75F);
 
+            // Add drop creators for frankincense tears.
             this.addDropCreator(new DropCreatorFrankincense());
 
             // Setup seed.

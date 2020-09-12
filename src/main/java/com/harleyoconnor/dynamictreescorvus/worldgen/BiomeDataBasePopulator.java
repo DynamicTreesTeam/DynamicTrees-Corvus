@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
-public class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
+public final class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
 
     public void populate(BiomeDataBase dbase) {
         Species frankincense = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense"));
@@ -18,6 +18,7 @@ public class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
         Biome.REGISTRY.forEach(biome -> {
             if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)) return;
 
+            // Add frankincense to random species selector for Savannah.
             BiomePropertySelectors.RandomSpeciesSelector selector = new BiomePropertySelectors.RandomSpeciesSelector().add(20).add(frankincense, 1);
             dbase.setSpeciesSelector(biome, selector, BiomeDataBase.Operation.SPLICE_BEFORE);
 
