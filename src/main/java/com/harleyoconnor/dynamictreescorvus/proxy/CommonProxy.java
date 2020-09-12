@@ -1,11 +1,9 @@
 package com.harleyoconnor.dynamictreescorvus.proxy;
 
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
-import com.ferreusveritas.dynamictrees.trees.Species;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import com.harleyoconnor.dynamictreescorvus.growth.CustomCellKits;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,9 +31,7 @@ public class CommonProxy {
 	}
 
 	private static void registerSaplingReplacement(final Block saplingBlock, final String speciesName) {
-		IBlockState sapling = saplingBlock.getDefaultState();
-		Species species = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, speciesName));
-		TreeRegistry.registerSaplingReplacer(sapling, species);
+		TreeRegistry.registerSaplingReplacer(saplingBlock.getDefaultState(), TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, speciesName)));
 	}
 
 	public void postInit() {

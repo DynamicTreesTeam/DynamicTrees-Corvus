@@ -38,6 +38,11 @@ public class TreeFrankincense extends TreeFamily {
             // Set growing parameters.
             this.setBasicGrowingParameters(0.15f, 16.0f, 10, 1, 0.7f);
 
+            // Set environment factors.
+            this.envFactor(BiomeDictionary.Type.COLD, 0.25F);
+            this.envFactor(BiomeDictionary.Type.NETHER, 0.75F);
+            this.envFactor(BiomeDictionary.Type.WET, 0.75F);
+
             this.addDropCreator(new DropCreatorFrankincense());
 
             // Setup seed.

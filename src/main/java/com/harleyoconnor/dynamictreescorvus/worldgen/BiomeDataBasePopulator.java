@@ -13,14 +13,12 @@ import net.minecraftforge.common.BiomeDictionary;
 public class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
 
     public void populate(BiomeDataBase dbase) {
-        // TODO: Find way to remove regular trees from world gen.
-
         Species frankincense = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense"));
 
         Biome.REGISTRY.forEach(biome -> {
             if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)) return;
 
-            BiomePropertySelectors.RandomSpeciesSelector selector = new BiomePropertySelectors.RandomSpeciesSelector().add(10).add(frankincense, 1);
+            BiomePropertySelectors.RandomSpeciesSelector selector = new BiomePropertySelectors.RandomSpeciesSelector().add(20).add(frankincense, 1);
             dbase.setSpeciesSelector(biome, selector, BiomeDataBase.Operation.SPLICE_BEFORE);
 
             DynamicTreesCorvus.logger.info("Added Frankincense species to biome database for " + biome.getBiomeName() + ".");
