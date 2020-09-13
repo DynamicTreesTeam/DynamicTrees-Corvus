@@ -60,10 +60,9 @@ public final class CustomCellKits {
             return this.frankincenseSolver;
         }
 
-        // TODO: Create custom leaf cluster - this is the "stamp" that is making trees generate with too many leaves.
         @Override
         public SimpleVoxmap getLeafCluster() {
-            return LeafClusters.acacia;
+            return CustomLeafClusters.frankincense;
         }
 
         @Override
