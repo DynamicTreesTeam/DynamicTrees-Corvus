@@ -6,7 +6,7 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-corvus",
-  "updateUrl": "https://github.com/Harleyoc1/DTVersionInfo/blob/master/Add-ons/Corvus.json?raw=true",
+  "updateUrl": "https://github.com/Harleyoc1/DynamicTreesVersionInfo/blob/master/Add-ons/Corvus.json?raw=true",
   "authorList": ["Harley O'Connor"],
   "credits": "Ferreusveritas for Dynamic Trees, Lemonszz for Corvus",
   "logoFile": "dtc-logo.png",
