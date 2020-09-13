@@ -5,11 +5,11 @@
   "description": "Adds compatibility between Dynamic Trees and Corvus.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-corvus",
+  "updateUrl": "https://github.com/Harleyoc1/DTVersionInfo/blob/master/Add-ons/Corvus.json?raw=true",
   "authorList": ["Harley O'Connor"],
   "credits": "Ferreusveritas for Dynamic Trees, Lemonszz for Corvus",
-  "logoFile": "cv-logo.png",
+  "logoFile": "dtc-logo.png",
   "screenshots": [],
   "dependencies": []
 }
