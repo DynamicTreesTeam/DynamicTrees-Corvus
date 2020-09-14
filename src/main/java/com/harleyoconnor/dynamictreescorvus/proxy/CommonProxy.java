@@ -1,5 +1,6 @@
 package com.harleyoconnor.dynamictreescorvus.proxy;
 
+import com.ferreusveritas.dynamictrees.ModConfigs;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import com.harleyoconnor.dynamictreescorvus.growth.CustomCellKits;
@@ -24,7 +25,7 @@ public class CommonProxy {
 	
 	public void init() {
 		// Disable Corvus tree generation.
-		disableVanillaTreeGen();
+		if (ModConfigs.worldGen) disableRegularTreeGen();
 
 		// Register sapling replacements.
 		registerSaplingReplacement(CorvusBlocks.FRANKINSENCE_SAPLING, "frankincense");
@@ -37,7 +38,7 @@ public class CommonProxy {
 	public void postInit() {
 	}
 
-	private static void disableVanillaTreeGen () {
+	private static void disableRegularTreeGen () {
 		try {
 			// Get field which stored tree generator for frankincense.
 			final Field field = CorvusTreeGen.class.getDeclaredField("FRANK_TREE_GEN");
