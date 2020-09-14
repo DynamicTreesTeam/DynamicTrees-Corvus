@@ -1,6 +1,6 @@
 <img src="https://github.com/Harleyoc1/DynamicTreesCorvus/blob/master/dtc-banner.png?raw=true" alt="banner" width="1176"/>
 
-# DynamicTreesCorvus
+# Dynamic Trees for Corvus
 Dynamic Trees compatibility add-on for Corvus.
 
 ## Download
