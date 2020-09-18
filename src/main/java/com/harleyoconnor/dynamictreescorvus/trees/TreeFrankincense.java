@@ -151,11 +151,6 @@ public final class TreeFrankincense extends TreeFamily {
     }
 
     @Override
-    public boolean autoCreateBranch() {
-        return true;
-    }
-
-    @Override
     public ItemStack getPrimitiveLogItemStack(int qty) {
         return new ItemStack(logBlock, qty, 0);
     }
