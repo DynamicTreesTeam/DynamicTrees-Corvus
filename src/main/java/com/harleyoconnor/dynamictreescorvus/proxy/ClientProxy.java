@@ -11,24 +11,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public final class ClientProxy extends CommonProxy {
-	
-	@Override
-	public void preInit() {
-		super.preInit();
-	}
-	
+
 	@Override
 	public void init() {
 		super.init();
 		this.registerColorHandlers();
 	}
-	
-	@Override public void postInit() {
-		super.postInit();
-	}
-	
-	public void registerColorHandlers() {
-		for (BlockDynamicLeaves leaves: LeavesPaging.getLeavesMapForModId(DynamicTreesCorvus.MODID).values()) {
+
+	private void registerColorHandlers() {
+		for (BlockDynamicLeaves leaves: LeavesPaging.getLeavesMapForModId(DynamicTreesCorvus.MOD_ID).values()) {
 			ModelHelper.regColorHandler(leaves, (state, worldIn, pos, tintIndex) -> {
 				Block block = state.getBlock();
 

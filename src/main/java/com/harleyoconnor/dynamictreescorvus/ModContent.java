@@ -26,7 +26,6 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -35,8 +34,7 @@ import party.lemons.corvus.init.CorvusBlocks;
 import java.util.ArrayList;
 import java.util.Collections;
 
-@Mod.EventBusSubscriber(modid = com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID)
-@ObjectHolder(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID)
+@Mod.EventBusSubscriber(modid = DynamicTreesCorvus.MOD_ID)
 public final class ModContent {
 
 	public static ILeavesProperties frankincenseLeavesProperties;
@@ -54,7 +52,7 @@ public final class ModContent {
 
 		frankincenseLeavesProperties = setUpLeaves(TreeFrankincense.leavesBlock, "frankincense");
 
-		LeavesPaging.getLeavesBlockForSequence(DynamicTreesCorvus.MODID, 0, frankincenseLeavesProperties);
+		LeavesPaging.getLeavesBlockForSequence(DynamicTreesCorvus.MOD_ID, 0, frankincenseLeavesProperties);
 
 		TreeFamily frankincenseTree = new TreeFrankincense();
 		Collections.addAll(trees, frankincenseTree);
@@ -62,7 +60,7 @@ public final class ModContent {
 		trees.forEach(tree -> tree.registerSpecies(Species.REGISTRY));
 		ArrayList<Block> treeBlocks = new ArrayList<>();
 		trees.forEach(tree -> tree.getRegisterableBlocks(treeBlocks));
-		treeBlocks.addAll(LeavesPaging.getLeavesMapForModId(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID).values());
+		treeBlocks.addAll(LeavesPaging.getLeavesMapForModId(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MOD_ID).values());
 		registry.registerAll(treeBlocks.toArray(new Block[treeBlocks.size()]));
 	}
 
@@ -98,7 +96,7 @@ public final class ModContent {
 	}
 
 	public static void setUpSeedRecipes (String name, ItemStack treeSapling){
-		Species treeSpecies = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, name));
+		Species treeSpecies = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MOD_ID, name));
 		ItemStack treeSeed = treeSpecies.getSeedStack(1);
 		ItemStack treeTransformationPotion = ModItems.dendroPotion.setTargetTree(new ItemStack(ModItems.dendroPotion, 1, DendroPotionType.TRANSFORM.getIndex()), treeSpecies.getFamily());
 		BrewingRecipeRegistry.addRecipe(new ItemStack(ModItems.dendroPotion, 1, DendroPotionType.TRANSFORM.getIndex()), treeSeed, treeTransformationPotion);
@@ -113,6 +111,6 @@ public final class ModContent {
 			ModelHelper.regModel(tree.getCommonSpecies().getSeed());
 			ModelHelper.regModel(tree);
 		}
-		LeavesPaging.getLeavesMapForModId(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MODID).forEach((key, leaves) -> ModelLoader.setCustomStateMapper(leaves, new StateMap.Builder().ignore(BlockLeaves.DECAYABLE).build()));
+		LeavesPaging.getLeavesMapForModId(com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus.MOD_ID).forEach((key, leaves) -> ModelLoader.setCustomStateMapper(leaves, new StateMap.Builder().ignore(BlockLeaves.DECAYABLE).build()));
 	}
 }

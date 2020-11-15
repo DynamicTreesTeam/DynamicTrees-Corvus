@@ -1,0 +1,14 @@
+[
+  {
+    "select": { "type": "savanna", "name": "minecraft:.*" },
+    "apply": {
+      "species" : {
+        "method" : "before",
+        "random" : {
+          "dynamictreescorvus:frankincense" : 1,
+          "...": 20
+        }
+      }
+    }
+  }
+]

@@ -32,7 +32,7 @@ public class CommonProxy {
 	}
 
 	private static void registerSaplingReplacement(final Block saplingBlock, final String speciesName) {
-		TreeRegistry.registerSaplingReplacer(saplingBlock.getDefaultState(), TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, speciesName)));
+		TreeRegistry.registerSaplingReplacer(saplingBlock.getDefaultState(), TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MOD_ID, speciesName)));
 	}
 
 	public void postInit() {

@@ -10,10 +10,10 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid= DynamicTreesCorvus.MODID, name= DynamicTreesCorvus.NAME, dependencies = DynamicTreesCorvus.DEPENDENCIES, updateJSON = "https://github.com/Harleyoc1/DynamicTreesVersionInfo/blob/master/Add-ons/Corvus.json?raw=true")
+@Mod(modid= DynamicTreesCorvus.MOD_ID, name= DynamicTreesCorvus.NAME, dependencies = DynamicTreesCorvus.DEPENDENCIES, updateJSON = "https://github.com/Harleyoc1/DynamicTreesVersionInfo/blob/master/Add-ons/Corvus.json?raw=true")
 public final class DynamicTreesCorvus {
 	
-	public static final String MODID = "dynamictreescorvus";
+	public static final String MOD_ID = "dynamictreescorvus";
 	public static final String NAME = "Dynamic Trees for Corvus";
 	public static final String DEPENDENCIES = ModConstants.REQAFTER + ModConstants.DYNAMICTREES_LATEST
 			+ ModConstants.NEXT + ModConstants.REQAFTER + "corvus";

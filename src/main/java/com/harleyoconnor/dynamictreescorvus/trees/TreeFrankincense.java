@@ -137,7 +137,7 @@ public final class TreeFrankincense extends TreeFamily {
     }
 
     public TreeFrankincense() {
-        super(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense"));
+        super(new ResourceLocation(DynamicTreesCorvus.MOD_ID, "frankincense"));
 
         this.setPrimitiveLog(logBlock.getDefaultState(), new ItemStack(logBlock, 1, 0));
         ModContent.frankincenseLeavesProperties.setTree(this);

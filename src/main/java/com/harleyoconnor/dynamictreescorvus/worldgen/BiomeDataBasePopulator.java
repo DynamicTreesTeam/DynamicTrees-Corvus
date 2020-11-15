@@ -1,28 +1,27 @@
 package com.harleyoconnor.dynamictreescorvus.worldgen;
 
-import com.ferreusveritas.dynamictrees.api.TreeRegistry;
-import com.ferreusveritas.dynamictrees.api.worldgen.BiomePropertySelectors;
 import com.ferreusveritas.dynamictrees.api.worldgen.IBiomeDataBasePopulator;
-import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.worldgen.BiomeDataBase;
+import com.ferreusveritas.dynamictrees.worldgen.BiomeDataBasePopulatorJson;
 import com.harleyoconnor.dynamictreescorvus.DynamicTreesCorvus;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 
+/**
+ * @author Harley O'Connor
+ */
 public final class BiomeDataBasePopulator implements IBiomeDataBasePopulator {
 
-    public void populate(BiomeDataBase dbase) {
-        Species frankincense = TreeRegistry.findSpecies(new ResourceLocation(DynamicTreesCorvus.MODID, "frankincense"));
+    public static final String RESOURCEPATH = "worldgen/default.json";
 
-        Biome.REGISTRY.forEach(biome -> {
-            if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)) return;
+    private final BiomeDataBasePopulatorJson jsonPopulator;
 
-            // Add frankincense to random species selector for Savannah.
-            BiomePropertySelectors.RandomSpeciesSelector selector = new BiomePropertySelectors.RandomSpeciesSelector().add(20).add(frankincense, 1);
-            dbase.setSpeciesSelector(biome, selector, BiomeDataBase.Operation.SPLICE_BEFORE);
-        });
+    public BiomeDataBasePopulator () {
+        this.jsonPopulator = new BiomeDataBasePopulatorJson(new ResourceLocation(DynamicTreesCorvus.MOD_ID, RESOURCEPATH));
+    }
+
+    @Override
+    public void populate (BiomeDataBase biomeDataBase) {
+        this.jsonPopulator.populate(biomeDataBase);
     }
 
 }
-

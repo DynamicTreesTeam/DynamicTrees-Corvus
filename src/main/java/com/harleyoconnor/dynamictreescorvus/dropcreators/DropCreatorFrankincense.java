@@ -18,7 +18,7 @@ import java.util.Random;
 public final class DropCreatorFrankincense extends DropCreator {
 
     public DropCreatorFrankincense() {
-        super(new ResourceLocation(DynamicTreesCorvus.MODID, CorvusItems.FRANKINCENSE_TEARS.getRegistryName().getResourceDomain()));
+        super(new ResourceLocation(DynamicTreesCorvus.MOD_ID, CorvusItems.FRANKINCENSE_TEARS.getRegistryName().getResourceDomain()));
     }
 
     @Override
